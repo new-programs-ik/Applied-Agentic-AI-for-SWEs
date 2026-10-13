@@ -72,15 +72,15 @@ Measured costs of running each course notebook on the shared OpenRouter key. Fig
 - **Measured on:** 2026-10-13
 - **Key required:** `OPENROUTER_APIKEY`
 - **Model:** `openai/gpt-4.1-mini` ($0.40 / $1.60 per million input / output tokens), set by `MODEL` in the client cell
-- **Runs measured:** 4 full end-to-end runs
+- **Runs measured:** 7 full end-to-end runs (4 before and 3 after the code was simplified for Python beginners; same prompts, tools and model)
 - **Pattern:** Part 1 is a fixed workflow (3 model calls). Part 2 is a coding-agent loop where the model decides the number of steps (9 to 15 model calls in our runs)
 
 | Part | Model calls | Tokens (in / out) | Cost (USD) |
 |---|---|---|---|
-| Part 1 – workflow | 3 | — | ≈ $0.0023 |
-| Part 2 – agent (cheapest run) | 9 | 18,453 / 1,311 | $0.0059 |
+| Part 1 – workflow | 3 | — | $0.0023 to $0.0038 |
+| Part 2 – agent (cheapest run) | 9 | — | $0.0043 |
 | Part 2 – agent (most expensive run) | 15 | 38,155 / 1,522 | $0.0079 |
-| **Total per full run** | | | **≈ $0.008 to $0.010** |
+| **Total per full run** | | | **≈ $0.007 to $0.011** |
 
 **Budget estimate**
 
