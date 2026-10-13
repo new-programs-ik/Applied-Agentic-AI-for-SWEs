@@ -67,8 +67,37 @@ Measured costs of running each course notebook on the shared OpenRouter key. Fig
 - Changing `MODEL` to a cheaper tool-calling model cuts the cost sharply. For example, `openai/gpt-4.1-mini` costs $0.40 / $1.60 per million tokens, about 6× cheaper than gpt-4o.
 - If the model loops or retries tool calls, a run can cost more than shown here.
 
+### Week 1/project/Fix_Failing_Tests_Agent.ipynb
+
+- **Measured on:** 2026-10-13
+- **Key required:** `OPENROUTER_APIKEY`
+- **Model:** `openai/gpt-4.1-mini` ($0.40 / $1.60 per million input / output tokens), set by `MODEL` in the client cell
+- **Runs measured:** 4 full end-to-end runs
+- **Pattern:** Part 1 is a fixed workflow (3 model calls). Part 2 is a coding-agent loop where the model decides the number of steps (9 to 15 model calls in our runs)
+
+| Part | Model calls | Tokens (in / out) | Cost (USD) |
+|---|---|---|---|
+| Part 1 – workflow | 3 | — | ≈ $0.0023 |
+| Part 2 – agent (cheapest run) | 9 | 18,453 / 1,311 | $0.0059 |
+| Part 2 – agent (most expensive run) | 15 | 38,155 / 1,522 | $0.0079 |
+| **Total per full run** | | | **≈ $0.008 to $0.010** |
+
+**Budget estimate**
+
+| Scenario | Estimated cost |
+|---|---|
+| One full run | ≈ $0.009 |
+| One learner (≈15 runs, including exercises) | ≈ $0.14 |
+| Cohort of 100 learners | ≈ $14 (plus OpenRouter's ~5.5% fee on credit purchases) |
+
+**Notes**
+
+- Agent cost varies with the number of steps the model takes. Input tokens dominate, because each step resends the full history, including file contents and test output.
+- `max_steps=20` caps a runaway run at roughly $0.03 with this model.
+- Switching `MODEL` to `openai/gpt-4o` costs about 6× more per run. Premium models can cost far more.
+
 ### Week 1 total
 
-| | Per run of every notebook | Per learner (≈10 runs each) | Cohort of 100 |
+| | Per run of every notebook | Per learner | Cohort of 100 |
 |---|---|---|---|
-| Week 1 | ≈ $0.015 | ≈ $0.15 | ≈ $15 |
+| Week 1 | ≈ $0.024 | ≈ $0.29 | ≈ $29 |
